@@ -1,6 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 
+const logger = require("./middleware/logger.js");
+
 // Route files
 const oses = require("./routes/oses.js");
 
@@ -8,6 +10,11 @@ const oses = require("./routes/oses.js");
 dotenv.config({ path: "./config/config.env" });
 
 const app = express();
+
+// Dev logging middleware
+if(process.env.NODE_ENV === "development") {
+  app.use(logger);
+}
 
 app.use("/api/cgl", oses);
 
